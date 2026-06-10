@@ -1,7 +1,12 @@
 import type { Ingreso, KpiIngresos } from '~/types/dashboard'
 
 export function useIngresos() {
+  const { aplicado } = useFiltrosDashboard()
+
+  const query = computed(() => ({ anio: aplicado.value.anio }))
+
   const { data: ingresos } = useFetch<Ingreso[]>('/api/ingresos', {
+    query,
     default: () => [] as Ingreso[]
   })
 
@@ -12,7 +17,7 @@ export function useIngresos() {
     const anterior = list.at(-2)!
     return {
       totalMes: ultimo.total,
-      totalAnio: list.filter(i => i.anio === 2025).reduce((acc, i) => acc + i.total, 0),
+      totalAnio: list.reduce((acc, i) => acc + i.total, 0),
       variacionMensual: ((ultimo.total - anterior.total) / anterior.total) * 100,
       tendencia: list
     }

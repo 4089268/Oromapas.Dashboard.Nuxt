@@ -7,6 +7,8 @@ const { kpi: kpiDescuentos } = useDescuentos()
 const { kpi: kpiOrdenes } = useOrdenesTrabajo()
 const { kpi: kpiPadron } = usePadronUsuarios()
 
+const { pendiente, esPeriodo, subtituloPeriodo, aplicar, limpiar } = useFiltrosDashboard()
+
 const activeTab = ref('facturas')
 const filtrosPanelAbierto = ref(false)
 
@@ -21,18 +23,18 @@ const tiposPeriodo = [
 ]
 
 const meses = [
-  { label: 'Enero', value: '01' },
-  { label: 'Febrero', value: '02' },
-  { label: 'Marzo', value: '03' },
-  { label: 'Abril', value: '04' },
-  { label: 'Mayo', value: '05' },
-  { label: 'Junio', value: '06' },
-  { label: 'Julio', value: '07' },
-  { label: 'Agosto', value: '08' },
+  { label: 'Enero',      value: '01' },
+  { label: 'Febrero',    value: '02' },
+  { label: 'Marzo',      value: '03' },
+  { label: 'Abril',      value: '04' },
+  { label: 'Mayo',       value: '05' },
+  { label: 'Junio',      value: '06' },
+  { label: 'Julio',      value: '07' },
+  { label: 'Agosto',     value: '08' },
   { label: 'Septiembre', value: '09' },
-  { label: 'Octubre', value: '10' },
-  { label: 'Noviembre', value: '11' },
-  { label: 'Diciembre', value: '12' }
+  { label: 'Octubre',    value: '10' },
+  { label: 'Noviembre',  value: '11' },
+  { label: 'Diciembre',  value: '12' }
 ]
 
 const anios = [
@@ -43,39 +45,24 @@ const anios = [
 
 const estadosFactura = [
   { label: 'Todos los estados', value: 'todos' },
-  { label: 'Pagadas', value: 'pagada' },
-  { label: 'Pendientes', value: 'pendiente' },
-  { label: 'Vencidas', value: 'vencida' },
-  { label: 'Canceladas', value: 'cancelada' }
+  { label: 'Pagadas',           value: 'pagada' },
+  { label: 'Pendientes',        value: 'pendiente' },
+  { label: 'Vencidas',          value: 'vencida' },
+  { label: 'Canceladas',        value: 'cancelada' }
 ]
 
 const tiposOrden = [
   { label: 'Todos los tipos', value: 'todos' },
-  { label: 'Fuga', value: 'fuga' },
-  { label: 'Instalación', value: 'instalacion' },
-  { label: 'Mantenimiento', value: 'mantenimiento' },
-  { label: 'Medidor', value: 'medidor' },
-  { label: 'Reconexión', value: 'reconexion' }
+  { label: 'Fuga',            value: 'fuga' },
+  { label: 'Instalación',     value: 'instalacion' },
+  { label: 'Mantenimiento',   value: 'mantenimiento' },
+  { label: 'Medidor',         value: 'medidor' },
+  { label: 'Reconexión',      value: 'reconexion' }
 ]
 
-const filtroPeriodo = ref('mes')
-const filtroMes = ref('05')
-const filtroAnio = ref('2025')
-const filtroFechaInicio = ref('')
-const filtroFechaFin = ref('')
-const filtroEstado = ref('todos')
-const filtroTipoOrden = ref('todos')
-
-const esPeriodo = computed(() => filtroPeriodo.value === 'periodo')
-
-function limpiarFiltros() {
-  filtroPeriodo.value = 'mes'
-  filtroMes.value = '05'
-  filtroAnio.value = '2025'
-  filtroFechaInicio.value = ''
-  filtroFechaFin.value = ''
-  filtroEstado.value = 'todos'
-  filtroTipoOrden.value = 'todos'
+function aplicarFiltros() {
+  aplicar()
+  filtrosPanelAbierto.value = false
 }
 </script>
 
@@ -125,42 +112,42 @@ function limpiarFiltros() {
 
             <div class="flex flex-col gap-4">
               <UFormField label="Tipo de período">
-                <USelect v-model="filtroPeriodo" :items="tiposPeriodo" value-key="value" label-key="label" class="w-full" />
+                <USelect v-model="pendiente.periodo" :items="tiposPeriodo" value-key="value" label-key="label" class="w-full" />
               </UFormField>
 
               <template v-if="!esPeriodo">
                 <UFormField label="Mes">
-                  <USelect v-model="filtroMes" :items="meses" value-key="value" label-key="label" class="w-full" />
+                  <USelect v-model="pendiente.mes" :items="meses" value-key="value" label-key="label" class="w-full" />
                 </UFormField>
                 <UFormField label="Año">
-                  <USelect v-model="filtroAnio" :items="anios" value-key="value" label-key="label" class="w-full" />
+                  <USelect v-model="pendiente.anio" :items="anios" value-key="value" label-key="label" class="w-full" />
                 </UFormField>
               </template>
 
               <template v-else>
                 <UFormField label="Fecha inicio">
-                  <UInput v-model="filtroFechaInicio" type="date" class="w-full" />
+                  <UInput v-model="pendiente.fechaInicio" type="date" class="w-full" />
                 </UFormField>
                 <UFormField label="Fecha fin">
-                  <UInput v-model="filtroFechaFin" type="date" class="w-full" />
+                  <UInput v-model="pendiente.fechaFin" type="date" class="w-full" />
                 </UFormField>
               </template>
 
               <USeparator />
 
               <UFormField label="Estado de Facturas">
-                <USelect v-model="filtroEstado" :items="estadosFactura" value-key="value" label-key="label" class="w-full" />
+                <USelect v-model="pendiente.estado" :items="estadosFactura" value-key="value" label-key="label" class="w-full" />
               </UFormField>
 
               <UFormField label="Tipo de Orden">
-                <USelect v-model="filtroTipoOrden" :items="tiposOrden" value-key="value" label-key="label" class="w-full" />
+                <USelect v-model="pendiente.tipo" :items="tiposOrden" value-key="value" label-key="label" class="w-full" />
               </UFormField>
             </div>
 
             <template #footer>
               <div class="flex flex-col gap-2">
-                <UButton icon="i-lucide-search" block @click="filtrosPanelAbierto = false">Aplicar</UButton>
-                <UButton icon="i-lucide-x" color="neutral" variant="outline" block @click="limpiarFiltros">
+                <UButton icon="i-lucide-search" block @click="aplicarFiltros">Aplicar</UButton>
+                <UButton icon="i-lucide-x" color="neutral" variant="outline" block @click="limpiar">
                   Limpiar
                 </UButton>
               </div>
@@ -174,7 +161,7 @@ function limpiarFiltros() {
 
         <!-- Zona 1: KPI Cards -->
         <section>
-          <UiSectionTitle title="Indicadores del Mes" subtitle="Resumen de mayo 2025" />
+          <UiSectionTitle title="Indicadores del período" :subtitle="subtituloPeriodo" />
           <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 gap-3 lg:gap-4 mt-4">
             <DashboardKpiCard
               title="Ingresos del Mes"
