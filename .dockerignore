@@ -1,0 +1,54 @@
+# Dependencias — se instalan dentro del contenedor
+node_modules
+
+# Outputs de build de Nuxt — se generan en el contenedor
+.nuxt
+.nitro
+.output
+.cache
+dist
+
+# Control de versiones
+.git
+.github
+.gitignore
+
+# Archivos de entorno locales
+.env
+.env.*
+!.env.example
+
+# Archivos de desarrollo / IDE
+.vscode
+.idea
+.fleet
+.DS_Store
+.editorconfig
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+logs
+
+# Documentación y metadatos del repo
+README.md
+LICENSE
+CLAUDE.md
+renovate.json
+
+# Lock files alternativos (el proyecto usa npm)
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+# Cobertura de tests
+coverage
+.nyc_output
+
+# Este mismo archivo y el Dockerfile
+.dockerignore
+Dockerfile
+
+# Claude Code
+.claude
