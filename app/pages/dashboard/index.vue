@@ -159,6 +159,7 @@ function aplicarFiltros() {
               :subtitle="`${formatNumber(kpiDescuentos.totalFacturas)} facturas`"
               icon="i-lucide-tag"
               icon-color="bg-violet-600"
+              pending
             />
             <DashboardKpiCard
               title="Órdenes Activas"
@@ -166,6 +167,7 @@ function aplicarFiltros() {
               :subtitle="`${kpiOrdenes.totalCompletadas} completadas`"
               icon="i-lucide-wrench"
               icon-color="bg-amber-500"
+              pending
             />
             <DashboardKpiCard
               title="Padrón"
@@ -173,6 +175,7 @@ function aplicarFiltros() {
               :subtitle="`${kpiPadron.porcentajeActivos.toFixed(1)}% activos`"
               icon="i-lucide-users"
               icon-color="bg-emerald-600"
+              pending
             />
           </div>
         </section>
@@ -199,12 +202,12 @@ function aplicarFiltros() {
             <UCard>
               <template #header>
                 <div class="flex items-center gap-2">
-                  <UIcon name="i-lucide-pie-chart" class="w-4 h-4 text-primary-600" />
-                  <p class="font-semibold text-sm">Estado de Facturas</p>
+                  <UIcon name="i-lucide-bar-chart-2" class="w-4 h-4 text-teal-600" />
+                  <p class="font-semibold text-sm">Facturación Anual</p>
                 </div>
               </template>
               <ClientOnly>
-                <DashboardFacturasStatusChart />
+                <DashboardFacturacionAnualChart />
                 <template #fallback>
                   <div class="h-64 animate-pulse rounded-lg bg-elevated" />
                 </template>
@@ -216,6 +219,9 @@ function aplicarFiltros() {
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-bar-chart-horizontal" class="w-4 h-4 text-primary-600" />
                   <p class="font-semibold text-sm">Órdenes por Estado</p>
+                  <UBadge color="warning" variant="subtle" size="xs" icon="i-lucide-clock" class="ml-auto">
+                    Próximamente
+                  </UBadge>
                 </div>
               </template>
               <ClientOnly>
@@ -231,6 +237,9 @@ function aplicarFiltros() {
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-bar-chart-2" class="w-4 h-4 text-primary-600" />
                   <p class="font-semibold text-sm">Padrón por Tarifa</p>
+                  <UBadge color="warning" variant="subtle" size="xs" icon="i-lucide-clock" class="ml-auto">
+                    Próximamente
+                  </UBadge>
                 </div>
               </template>
               <ClientOnly>

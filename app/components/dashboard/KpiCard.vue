@@ -7,6 +7,7 @@ const props = defineProps<{
   iconColor?: string
   trend?: number
   trendLabel?: string
+  pending?: boolean
 }>()
 
 const trendColor = computed(() => {
@@ -25,7 +26,17 @@ const trendIcon = computed(() => {
 </script>
 
 <template>
-  <UCard class="hover:shadow-md transition-shadow">
+  <UCard class="hover:shadow-md transition-shadow relative">
+    <UBadge
+      v-if="pending"
+      color="warning"
+      variant="subtle"
+      size="xs"
+      icon="i-lucide-clock"
+      class="absolute top-2 right-2 z-10"
+    >
+      Próximamente
+    </UBadge>
     <div class="flex items-start justify-between gap-3">
       <div class="flex-1 min-w-0">
         <p class="text-xs font-medium text-(--ui-text-muted) uppercase tracking-wide truncate">{{ title }}</p>

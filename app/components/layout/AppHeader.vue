@@ -15,8 +15,8 @@ const navItems = [
   { label: 'Dashboard',    to: '/dashboard',    icon: 'i-lucide-layout-dashboard' },
   { label: 'Recaudación',  to: '/recaudacion',  icon: 'i-lucide-circle-dollar-sign' },
   { label: 'Facturas',     to: '/facturas',     icon: 'i-lucide-file-text' },
-  { label: 'Órdenes',      to: '/ordenes',      icon: 'i-lucide-wrench' },
-  { label: 'Padrón',       to: '/padron',       icon: 'i-lucide-users' },
+  { label: 'Órdenes',      to: '/ordenes',      icon: 'i-lucide-wrench',             pending: true },
+  { label: 'Padrón',       to: '/padron',       icon: 'i-lucide-users',              pending: true },
 ]
 </script>
 
@@ -36,6 +36,9 @@ const navItems = [
         >
           <UIcon :name="item.icon" class="w-4 h-4" />
           <span>{{ item.label }}</span>
+          <UBadge v-if="item.pending" color="warning" variant="subtle" size="xs">
+            Próx.
+          </UBadge>
         </NuxtLink>
       </nav>
     </div>
