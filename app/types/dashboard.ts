@@ -229,3 +229,99 @@ export interface RecaudacionTipoCalculo {
   totalRecaudado: number
   pctRecibos: number
 }
+
+// ── Facturación (esquema real de BD) ─────────────────────────────
+
+/** Resultado de SP_Dashboard_Facturacion_KPIs */
+export interface FacturacionKpis {
+  anio: number
+  mesDesde: number
+  mesHasta: number
+  totalUsuarios: number
+  totalFacturado: number
+  subtotalServicios: number
+  totalRecargos: number
+  totalIva: number
+  totalM3Facturados: number
+  totalM3Consumidos: number
+  diferenciaM3: number
+  cargoPromedioUsuario: number
+  consumoPromedioM3: number
+  totalConMedidor: number
+  totalSinMedidor: number
+  totalMedidorFuncional: number
+  totalMedidorNofuncional: number
+  pctConMedidor: number
+  pctMedidorFuncional: number
+  lecturasReales: number
+  lecturasPromediadas: number
+  pctLecturasReales: number
+}
+
+/** Resultado de SP_Dashboard_Facturacion_Tendencia — una fila por mes */
+export interface FacturacionMensual {
+  mes: number
+  totalUsuarios: number
+  totalM3Facturados: number
+  totalM3Consumidos: number
+  subtotalServicios: number
+  totalRecargos: number
+  totalIva: number
+  totalFacturado: number
+  cargoPromedioUsuario: number
+}
+
+/** Resultado de SP_Dashboard_Facturacion_PorTarifa */
+export interface FacturacionPorTarifa {
+  idTarifa: number
+  tarifa: string
+  totalUsuarios: number
+  totalM3Facturados: number
+  totalM3Consumidos: number
+  totalFacturado: number
+  cargoPromedioUsuario: number
+  consumoPromedioM3: number
+  pctUsuarios: number
+  pctFacturado: number
+}
+
+/** Resultado de SP_Dashboard_Facturacion_Medicion */
+export interface FacturacionMedicion {
+  totalUsuarios: number
+  conMedidorFuncional: number
+  conMedidorNofuncional: number
+  conMedidorTotal: number
+  sinMedidor: number
+  pctMedidorFuncional: number
+  pctMedidorNofuncional: number
+  pctSinMedidor: number
+  lecturasReales: number
+  lecturasPromediadas: number
+  usuariosMedidos: number
+  usuariosFijos: number
+  pctLecturasReales: number
+}
+
+/** Resultado de SP_Dashboard_Facturacion_Conceptos */
+export interface FacturacionConceptos {
+  agua: number
+  drenaje: number
+  saneamiento: number
+  otros: number
+  recargos: number
+  iva: number
+  subtotalServicios: number
+  totalFacturado: number
+}
+
+/** Resultado de SP_Dashboard_Facturacion_TipoCalculo */
+export interface FacturacionTipoCalculo {
+  idTipoCalculado: number
+  tipo: string
+  totalUsuarios: number
+  totalM3Facturados: number
+  totalM3Consumidos: number
+  totalFacturado: number
+  pctUsuarios: number
+  pctM3: number
+}

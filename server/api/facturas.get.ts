@@ -19,19 +19,12 @@ export default defineEventHandler((event): Factura[] => {
   const q = getQuery(event)
   let list = [...ALL_FACTURAS]
 
-  if (q.periodo === 'mes' && q.mes && q.anio) {
-    const mes = parseInt(String(q.mes))
+  if (q.mes && q.anio) {
+    const mes  = parseInt(String(q.mes))
     const anio = parseInt(String(q.anio))
     list = list.filter(f => {
       const d = new Date(f.fechaEmision)
       return d.getFullYear() === anio && d.getMonth() + 1 === mes
-    })
-  } else if (q.periodo === 'periodo' && q.fechaInicio && q.fechaFin) {
-    const inicio = new Date(String(q.fechaInicio))
-    const fin = new Date(String(q.fechaFin))
-    list = list.filter(f => {
-      const d = new Date(f.fechaEmision)
-      return d >= inicio && d <= fin
     })
   }
 

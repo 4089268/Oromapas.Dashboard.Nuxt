@@ -2,20 +2,14 @@
 definePageMeta({ layout: 'dashboard' })
 
 const { kpi: kpiIngresos } = useIngresos()
-const { kpi: kpiFacturas } = useFacturas()
+const { kpis: kpisFacturacion } = useFacturacionDB()
 const { kpi: kpiDescuentos } = useDescuentos()
 const { kpi: kpiOrdenes } = useOrdenesTrabajo()
 const { kpi: kpiPadron } = usePadronUsuarios()
 
 const { pendiente, subtituloPeriodo, aplicar, limpiar } = useFiltrosDashboard()
 
-const activeTab = ref('facturas')
 const filtrosPanelAbierto = ref(false)
-
-const tabItems = [
-  { label: 'Facturas Recientes', value: 'facturas' },
-  { label: 'Órdenes Recientes', value: 'ordenes' }
-]
 
 const meses = [
   { label: 'Enero',      value: '01' },
@@ -153,9 +147,9 @@ function aplicarFiltros() {
               trend-label="vs mes anterior"
             />
             <DashboardKpiCard
-              title="Facturas Emitidas"
-              :value="formatNumber(kpiFacturas.totalEmitidas)"
-              :subtitle="`${kpiFacturas.totalPendientes} pend. · ${kpiFacturas.totalVencidas} venc.`"
+              title="Usuarios Facturados"
+              :value="formatNumber(kpisFacturacion.totalUsuarios)"
+              :subtitle="`${formatCurrency(kpisFacturacion.totalFacturado)} facturado`"
               icon="i-lucide-file-text"
               icon-color="bg-teal-600"
             />
@@ -249,21 +243,6 @@ function aplicarFiltros() {
           </div>
         </section>
 
-        <!-- Zona 3: Actividad Reciente -->
-        <section>
-          <UiSectionTitle title="Actividad Reciente" />
-          <UCard class="mt-4">
-            <template #header>
-              <UTabs v-model="activeTab" :items="tabItems" variant="link" />
-            </template>
-            <div class="overflow-x-auto -mx-4 sm:mx-0">
-              <div class="min-w-[600px] sm:min-w-0 px-4 sm:px-0">
-                <DashboardRecentFacturasTable v-if="activeTab === 'facturas'" />
-                <DashboardRecentOrdenesTable v-else />
-              </div>
-            </div>
-          </UCard>
-        </section>
 
       </div>
     </div>
