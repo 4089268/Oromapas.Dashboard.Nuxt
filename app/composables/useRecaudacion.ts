@@ -12,8 +12,7 @@ export function useRecaudacion() {
 
   const queryPeriodo = computed(() => {
     const f = aplicado.value
-    if (f.periodo === 'mes') return { anio: f.anio, mes: f.mes }
-    return { anio: f.anio, mesInicio: f.fechaInicio?.slice(5, 7), mesFin: f.fechaFin?.slice(5, 7) }
+    return { anio: f.anio, mes: f.mes }
   })
 
   const queryAnio = computed(() => ({ anio: aplicado.value.anio }))

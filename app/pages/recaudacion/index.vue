@@ -2,14 +2,10 @@
 definePageMeta({ layout: 'dashboard' })
 
 const { kpis, morosidad } = useRecaudacion()
-const { pendiente, esPeriodo, subtituloPeriodo, aplicar, limpiar } = useFiltrosDashboard()
+const { pendiente, subtituloPeriodo, aplicar, limpiar } = useFiltrosDashboard()
 
 const filtrosPanelAbierto = ref(false)
 
-const tiposPeriodo = [
-  { label: 'Mes actual', value: 'mes' },
-  { label: 'Período',    value: 'periodo' }
-]
 const meses = [
   { label: 'Enero',      value: '01' }, { label: 'Febrero',    value: '02' },
   { label: 'Marzo',      value: '03' }, { label: 'Abril',      value: '04' },
@@ -68,25 +64,12 @@ function aplicarFiltros() {
             </template>
 
             <div class="flex flex-col gap-4">
-              <UFormField label="Tipo de período">
-                <USelect v-model="pendiente.periodo" :items="tiposPeriodo" value-key="value" label-key="label" class="w-full" />
+              <UFormField label="Mes">
+                <USelect v-model="pendiente.mes" :items="meses" value-key="value" label-key="label" class="w-full" />
               </UFormField>
-              <template v-if="!esPeriodo">
-                <UFormField label="Mes">
-                  <USelect v-model="pendiente.mes" :items="meses" value-key="value" label-key="label" class="w-full" />
-                </UFormField>
-                <UFormField label="Año">
-                  <USelect v-model="pendiente.anio" :items="anios" value-key="value" label-key="label" class="w-full" />
-                </UFormField>
-              </template>
-              <template v-else>
-                <UFormField label="Fecha inicio">
-                  <UInput v-model="pendiente.fechaInicio" type="date" class="w-full" />
-                </UFormField>
-                <UFormField label="Fecha fin">
-                  <UInput v-model="pendiente.fechaFin" type="date" class="w-full" />
-                </UFormField>
-              </template>
+              <UFormField label="Año">
+                <USelect v-model="pendiente.anio" :items="anios" value-key="value" label-key="label" class="w-full" />
+              </UFormField>
             </div>
 
             <template #footer>
