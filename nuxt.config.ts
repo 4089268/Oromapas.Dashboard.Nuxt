@@ -1,5 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    db: {
+      host:      process.env.DB_HOST      ?? '',
+      port:      parseInt(process.env.DB_PORT ?? '1433'),
+      database:  process.env.DB_NAME      ?? '',
+      user:      process.env.DB_USER      ?? '',
+      password:  process.env.DB_PASSWORD  ?? '',
+      encrypt:   process.env.DB_ENCRYPT   === 'true',
+      trustCert: process.env.DB_TRUST_CERT === 'true',
+    }
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui'

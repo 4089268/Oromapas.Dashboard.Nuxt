@@ -15,12 +15,14 @@
     "@iconify-json/simple-icons": "^1.2.83",
     "@nuxt/ui": "^4.7.1",
     "chart.js": "^4.5.1",
+    "mssql": "^12.5.5",
     "nuxt": "^4.4.6",
     "tailwindcss": "^4.3.0",
     "vue-chartjs": "^5.3.3"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
+    "@types/mssql": "^12.3.0",
     "eslint": "^10.4.0",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.0"

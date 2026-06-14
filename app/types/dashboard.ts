@@ -93,3 +93,139 @@ export interface KpiPadron {
   totalSuspendidos: number
   porcentajeActivos: number
 }
+
+// ── Recaudación (esquema real de BD) ─────────────────────────────
+
+/** Fila de la tabla dbo.Recaudacion */
+export interface RecaudacionRow {
+  af: number
+  mf: number
+  id_localidad: number
+  id_colonia: number
+  id_tarifa: 1 | 4 | 5 | 7
+  id_tipocalculado: 0 | 1 | 2 | 3
+  recibos: number
+  agua: number
+  dren: number
+  sane: number
+  otros: number
+  recar: number
+  r_agua: number
+  r_dren: number
+  r_sane: number
+  iva: number
+  mes_0: number
+  mes_1: number
+  mes_2: number
+  mes_3: number
+  mes_4: number
+  ven_recibos: number
+  ven_subtotal: number
+  ven_iva: number
+  ven_total: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_KPIs */
+export interface RecaudacionKpis {
+  anio: number
+  mesDesde: number
+  mesHasta: number
+  totalRecibos: number
+  subtotalServicios: number
+  totalRecargos: number
+  totalIva: number
+  totalRecaudado: number
+  recuperacionVencidos: number
+  recibosCorrientes: number
+  recibosAtraso1: number
+  recibosAtraso2: number
+  recibosAtraso3: number
+  recibosAtraso4mas: number
+  recibosMorosos: number
+  pctMorosidad: number
+  pctAlCorriente: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_Tendencia — una fila por mes */
+export interface RecaudacionMensual {
+  mes: number
+  totalRecibos: number
+  subtotalServicios: number
+  totalRecargos: number
+  totalIva: number
+  totalRecaudado: number
+  recuperacionVencidos: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_Conceptos */
+export interface RecaudacionConceptos {
+  agua: number
+  drenaje: number
+  saneamiento: number
+  otros: number
+  recargos: number
+  iva: number
+  recuperacionVencidosNeto: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_PorTarifa */
+export interface RecaudacionPorTarifa {
+  idTarifa: number
+  tarifa: string
+  totalRecibos: number
+  totalRecaudado: number
+  pctMorosidad: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_PorColonia */
+export interface RecaudacionPorColonia {
+  idColonia: number
+  idLocalidad: number
+  totalRecibos: number
+  totalRecaudado: number
+  recuperacionVencidos: number
+  pctMorosidad: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_Morosidad */
+export interface RecaudacionMorosidad {
+  corriente: number
+  atraso1Mes: number
+  atraso2Meses: number
+  atraso3Meses: number
+  atraso4MasMeses: number
+  totalRecibosCartera: number
+  pctCorriente: number
+  pctMorosos: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_MorosidadPorTarifa */
+export interface MorosidadPorTarifa {
+  idTarifa: number
+  tarifa: string
+  totalRecibos: number
+  corriente: number
+  atraso1Mes: number
+  atraso2Meses: number
+  atraso3Meses: number
+  atraso4Mas: number
+  pctMorosidad: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_Vencidos — una fila por mes */
+export interface VencidosMensual {
+  mes: number
+  recibosRecuperados: number
+  montoNeto: number
+  iva: number
+  totalRecuperado: number
+}
+
+/** Resultado de SP_Dashboard_Recaudacion_TipoCalculo */
+export interface RecaudacionTipoCalculo {
+  idTipoCalculado: number
+  tipo: string
+  totalRecibos: number
+  totalRecaudado: number
+  pctRecibos: number
+}
